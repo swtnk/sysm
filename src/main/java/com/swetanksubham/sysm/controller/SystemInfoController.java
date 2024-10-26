@@ -10,13 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/system")
 @RestController
 @RequiredArgsConstructor
 public class SystemInfoController {
 
     private final SystemInfoService service;
-    @GetMapping("system")
+    @GetMapping("")
     public SystemInfo getSystemInfo() {
         return this.service.getSystemInfo();
     }
