@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: SysM
+  jmx:
+    enabled: false
+
+server:
+  servlet:
+    context-path: /
