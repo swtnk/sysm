@@ -5,15 +5,14 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
-@Builder
 @Value
+@Builder
 @Jacksonized
-public class SystemInfo {
+public class ResourceInfo {
 
     @NonNull
-    OsInfo operatingSystem;
+    MemoryInfo memory;
 
-    @NonNull
-    ProcessorInfo processor;
+    double systemLoadAverage;
 
 }
