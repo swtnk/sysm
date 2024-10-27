@@ -22,6 +22,7 @@ public class GetResourceUsage implements Supplier<ResourceInfo> {
         return ResourceInfo.builder()
             .memory(this.getMemoryInfo())
             .systemLoadAverage(this.osBean.getSystemLoadAverage())
+            .cpuLoad(this.osBean.getCpuLoad())
             .build();
     }
 
