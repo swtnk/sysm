@@ -7,6 +7,7 @@ import com.swetanksubham.sysm.service.systeminfo.model.SystemInfo;
 import com.swetanksubham.sysm.service.systeminfo.SystemInfoService;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SystemInfoController {
 
     private final SystemInfoService service;
+
     @GetMapping("")
     public SystemInfo getSystemInfo() {
         return this.service.getSystemInfo();

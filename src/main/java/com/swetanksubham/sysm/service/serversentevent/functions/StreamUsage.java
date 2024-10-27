@@ -21,11 +21,16 @@ public class StreamUsage implements Supplier<Flux<ServerSentEvent<ResourceInfo>>
     @Override
     public Flux<ServerSentEvent<ResourceInfo>> get() {
         return Flux.interval(Duration.ofSeconds(1))
-                .map(sequence -> ServerSentEvent.<ResourceInfo>builder()
-                        .id(String.valueOf(sequence))
-                        .event("resource-utilization")
-                        .data(this.getResourceUsage.get())
-                        .build());
+                .map(sequence -> this.sse(sequence));
+    }
+
+    private ServerSentEvent<ResourceInfo> sse(
+            final long sequence) {
+        return ServerSentEvent.<ResourceInfo>builder()
+            .id(String.valueOf(sequence))
+            .event("resource-utilization")
+            .data(this.getResourceUsage.get())
+            .build();
     }
 
 }
