@@ -16,12 +16,14 @@ import lombok.RequiredArgsConstructor;
 public class GetSystemProperties implements Supplier<SystemInfo> {
 
     private final OperatingSystemMXBean osBean;
+    private final GetApplicationVersion applicationVersion;
 
     @Override
     public SystemInfo get() {
         return SystemInfo.builder()
             .operatingSystem(this.getOsInfo())
             .processor(this.getProcessorInfo())
+            .applicationVersion(this.applicationVersion.get())
             .build();
     }
 

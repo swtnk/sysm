@@ -16,4 +16,7 @@ public class SystemInfo {
     @NonNull
     ProcessorInfo processor;
 
+    @NonNull
+    String applicationVersion;
+
 }
