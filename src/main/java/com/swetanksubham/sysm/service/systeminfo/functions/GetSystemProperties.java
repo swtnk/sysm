@@ -40,5 +40,4 @@ public class GetSystemProperties implements Supplier<SystemInfo> {
             .available(this.osBean.getAvailableProcessors())
             .build();
     }
-
 }

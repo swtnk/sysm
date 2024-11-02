@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.swetanksubham.sysm.service.serversentevent.ServerSentEventService;
 import com.swetanksubham.sysm.service.systeminfo.model.ResourceInfo;
+import com.swetanksubham.sysm.service.systeminfo.model.RunningProcesses;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
@@ -21,9 +22,14 @@ public class ServerSentEventController {
 
     private final ServerSentEventService service;
 
-    @GetMapping(path = "/memory", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<ResourceInfo>> streamEvents() {
-        return this.service.steamSystemUsage();
+    @GetMapping(path = "/resources", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ServerSentEvent<ResourceInfo>> streamResourceUtilization() {
+        return this.service.streamSystemUsage();
+    }
+    
+    @GetMapping(path = "/processes", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ServerSentEvent<RunningProcesses>> streamRunningProcesses() {
+        return this.service.streamRunningProcesses();
     }
 
 }

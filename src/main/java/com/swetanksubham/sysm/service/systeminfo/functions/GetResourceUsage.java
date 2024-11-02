@@ -1,14 +1,19 @@
 package com.swetanksubham.sysm.service.systeminfo.functions;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.springframework.stereotype.Service;
 
 import com.sun.management.OperatingSystemMXBean;
+import com.swetanksubham.sysm.service.systeminfo.model.DiskPartitionInfo;
 import com.swetanksubham.sysm.service.systeminfo.model.MemoryInfo;
 import com.swetanksubham.sysm.service.systeminfo.model.MemoryProperties;
 import com.swetanksubham.sysm.service.systeminfo.model.ResourceInfo;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -23,6 +28,7 @@ public class GetResourceUsage implements Supplier<ResourceInfo> {
             .memory(this.getMemoryInfo())
             .systemLoadAverage(this.osBean.getSystemLoadAverage())
             .cpuLoad(this.osBean.getCpuLoad())
+            .diskPartition(this.getDiskPartition())
             .build();
     }
 
@@ -47,4 +53,18 @@ public class GetResourceUsage implements Supplier<ResourceInfo> {
             .build();
     }
 
+    private final List<DiskPartitionInfo> getDiskPartition() {
+        return Arrays.stream(File.listRoots())
+            .map(t -> this.getDiskPartition(t))
+            .toList();
+    }
+
+    private final DiskPartitionInfo getDiskPartition(@NonNull final File file) {
+        return DiskPartitionInfo.builder()
+            .path(file.getAbsolutePath())
+            .totalSpace(file.getTotalSpace())
+            .freeSpace(file.getFreeSpace())
+            .usableSpace(file.getFreeSpace())
+            .build();
+    }
 }

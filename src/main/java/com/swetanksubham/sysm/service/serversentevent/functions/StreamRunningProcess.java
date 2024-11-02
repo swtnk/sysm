@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Service;
 
-import com.swetanksubham.sysm.service.systeminfo.functions.GetResourceUsage;
-import com.swetanksubham.sysm.service.systeminfo.model.ResourceInfo;
+import com.swetanksubham.sysm.service.systeminfo.functions.GetRunningProcesses;
+import com.swetanksubham.sysm.service.systeminfo.model.RunningProcesses;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +17,12 @@ import reactor.core.publisher.Flux;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class StreamUsage implements Supplier<Flux<ServerSentEvent<ResourceInfo>>> {
+public class StreamRunningProcess implements Supplier<Flux<ServerSentEvent<RunningProcesses>>> {
 
-    private final GetResourceUsage getResourceUsage;
-    
+    private final GetRunningProcesses runningProcesses;
+
     @Override
-    public Flux<ServerSentEvent<ResourceInfo>> get() {
+    public Flux<ServerSentEvent<RunningProcesses>> get() {
         return Flux.interval(Duration.ofSeconds(1))
                 .onBackpressureLatest()
                 .map(sequence -> this.sse(sequence))
@@ -33,12 +33,11 @@ public class StreamUsage implements Supplier<Flux<ServerSentEvent<ResourceInfo>>
                 .doFinally(signalType -> log.info("SSE stream ended with signal: {}", signalType));
     }
 
-    private ServerSentEvent<ResourceInfo> sse(
-            final long sequence) {
-        return ServerSentEvent.<ResourceInfo>builder()
+    private ServerSentEvent<RunningProcesses> sse(final long sequence) {
+        return ServerSentEvent.<RunningProcesses>builder()
                 .id(String.valueOf(sequence))
-                .event("resource-utilization")
-                .data(this.getResourceUsage.get())
+                .event("processes")
+                .data(this.runningProcesses.get())
                 .build();
     }
 }
