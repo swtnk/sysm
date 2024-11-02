@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.swetanksubham</groupId>
 	<artifactId>sysm</artifactId>
-	<version>2024.10.3</version>
+	<version>2024.10.4</version>
 	<name>SysM</name>
 	<description>SysM can be deployed on any machine to monitor resources and execute command over http requests. This application also supports server sent event to continuously monitor resource utilization.</description>
 	<url/>
